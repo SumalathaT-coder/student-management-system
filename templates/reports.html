@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="reports-container">
+
+    <h1>Student Reports</h1>
+
+    <!-- Student Summary -->
+    <h2>Student Summary</h2>
+
+    <div class="report-cards">
+
+        <div class="report-card">
+            <h3>Total Students</h3>
+            <p>{{ total_students }}</p>
+        </div>
+
+        <div class="report-card">
+            <h3>Average Marks</h3>
+
+            {% if average_marks %}
+                <p>{{ average_marks|floatformat:2 }}</p>
+            {% else %}
+                <p>No marks available</p>
+            {% endif %}
+        </div>
+
+        <div class="report-card">
+            <h3>Highest Marks</h3>
+
+            {% if highest_marks %}
+                <p>{{ highest_marks }}</p>
+            {% else %}
+                <p>No marks available</p>
+            {% endif %}
+        </div>
+
+        <div class="report-card">
+            <h3>Lowest Marks</h3>
+
+            {% if lowest_marks %}
+                <p>{{ lowest_marks }}</p>
+            {% else %}
+                <p>No marks available</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+
+    <!-- Pass / Fail Statistics -->
+    <h2>Pass / Fail Statistics</h2>
+
+    <div class="report-cards">
+
+        <div class="report-card">
+            <h3>Passed Students</h3>
+            <p>{{ passed_students }}</p>
+        </div>
+
+        <div class="report-card">
+            <h3>Failed Students</h3>
+            <p>{{ failed_students }}</p>
+        </div>
+
+        <div class="report-card">
+            <h3>Pass Percentage</h3>
+            <p>{{ pass_percentage|floatformat:2 }}%</p>
+        </div>
+
+    </div>
+
+
+    <!-- Grade Statistics -->
+    <h2>Grade Statistics</h2>
+
+    <div class="report-cards">
+
+        {% for grade, count in grade_statistics %}
+
+            <div class="report-card">
+                <h3>{{ grade }} Grade</h3>
+                <p>{{ count }}</p>
+                <span>students</span>
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+</div>
+
+{% endblock %}

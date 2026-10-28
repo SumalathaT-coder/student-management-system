@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>{{ course.name }}</h1>
+
+<h2>Students</h2>
+
+<ul>
+    {% for student in course.student_set.all %}
+        <li>{{ student.name }}</li>
+    {% empty %}
+        <li>No students enrolled in this course.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

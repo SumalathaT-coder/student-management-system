@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+<!-- <!DOCTYPE html>
+<html>
+<head>
+    <title>Student Management System</title>
+</head>
+<body>
+
+    <h1>Student Management System</h1>
+
+    <hr>
+
+    <h3>Welcome to Django Student Management System</h3>
+
+    <br>
+
+    <a href="{% url 'add_student' %}">Add Student</a>
+
+    <br><br>
+
+    <a href="{% url 'view_students' %}">View Students</a>
+
+</body>
+</html> -->
+
+
+
+
+{% block content %}
+
+<h1>Student Management System</h1>
+
+<hr>
+
+<h3>Welcome to Django Student Management System</h3>
+
+<br>
+
+<a href="{% url 'add_student' %}">Add Student</a>
+
+<br><br>
+
+<a href="{% url 'view_students' %}">View Students</a>
+
+{% endblock %}
+

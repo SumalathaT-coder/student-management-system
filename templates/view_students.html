@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if messages %}
+
+    {% for message in messages %}
+
+        <p>{{ message }}</p>
+
+    {% endfor %}
+
+{% endif %}
+
+
+<h1>All Students</h1>
+
+<hr>
+
+
+<a href="{% url 'export_students_csv' %}?{{ request.GET.urlencode }}">
+    <button type="button">Export CSV</button>
+</a>
+
+<br>
+<br>
+
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="search"
+        id="student-search"
+        placeholder="Search student..."
+        value="{{ request.GET.search }}"
+    >
+
+
+    <select name="course">
+
+        <option value="">All Courses</option>
+
+        {% for course in courses %}
+
+            <option
+                value="{{ course.name }}"
+                {% if request.GET.course == course.name %}
+                    selected
+                {% endif %}
+            >
+                {{ course.name }}
+            </option>
+
+        {% endfor %}
+
+    </select>
+
+
+    <button type="submit">Search / Filter</button>
+
+</form>
+
+<br>
+
+
+<table border="1" id="students-table">
+
+    <tr>
+
+        <th>Name</th>
+        <th>Age</th>
+        <th>Email</th>
+        <th>Course</th>
+        <th>Marks</th>
+        <th>Grade</th>
+        <th>Result</th>
+        <th>Actions</th>
+
+    </tr>
+
+
+    {% for student in students %}
+
+    <tr>
+
+        <td>{{ student.name }}</td>
+
+        <td>{{ student.age }}</td>
+
+        <td>{{ student.email }}</td>
+
+        <td>
+
+            {% for course in student.courses.all %}
+
+                {{ course.name }}
+
+                {% if not forloop.last %}
+                    ,
+                {% endif %}
+
+            {% empty %}
+
+                No courses
+
+            {% endfor %}
+
+        </td>
+
+        <td>{{ student.marks }}</td>
+
+        <td>{{ student.grade }}</td>
+
+        <td>{{ student.result }}</td>
+
+
+        <td>
+
+            <a href="{% url 'student_detail' student.id %}">
+                View
+            </a>
+
+
+            <a
+                class="edit-btn"
+                href="{% url 'edit_student' student.id %}"
+            >
+                Edit
+            </a>
+
+
+            <a
+                class="delete-btn"
+                href="{% url 'delete_student' student.id %}"
+                onclick="return confirm('Are you sure you want to delete this student?');"
+            >
+                Delete
+            </a>
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+</table>
+
+
+{% if is_paginated %}
+
+<div>
+
+    {% if page_obj.has_previous %}
+
+        <a href="?page={{ page_obj.previous_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.course %}&course={{ request.GET.course }}{% endif %}">
+            Previous
+        </a>
+
+    {% endif %}
+
+
+    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+
+
+    {% if page_obj.has_next %}
+
+        <a href="?page={{ page_obj.next_page_number }}{% if request.GET.search %}&search={{ request.GET.search }}{% endif %}{% if request.GET.course %}&course={{ request.GET.course }}{% endif %}">
+            Next
+        </a>
+
+    {% endif %}
+
+</div>
+
+{% endif %}
+
+
+{% endblock %}

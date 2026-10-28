@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Student</title>
+</head>
+<body>
+
+    <h1>Edit Student</h1>
+
+    <hr>
+
+    
+
+
+<!-- 
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Name:</label><br>
+        <input type="text" name="name" value="{{ student.name }}"><br><br>
+
+        <label>Age:</label><br>
+        <input type="number" name="age" value="{{ student.age }}"><br><br>
+
+        <label>Email:</label><br>
+        <input type="email" name="email" value="{{ student.email }}"><br><br>
+
+        <label>Course:</label><br>
+        <input type="text"  name="course" value="{{ student.course }}"><br><br>
+
+        <label>Marks:</label><br>
+        <input type="number" name="marks" step="0.01" value="{{ student.marks }}"><br><br>
+
+        <button type="submit">Update Student</button>
+
+    </form> -->
+
+    <form method="POST">
+       {% csrf_token %}
+
+       {{ form }}
+
+       <button type="submit">Update Student</button>
+    </form>
+
+</body>
+</html>
+
+{% endblock %}

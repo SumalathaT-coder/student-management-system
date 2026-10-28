@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="profile-page">
+
+    <h1>My Profile</h1>
+
+    <div class="profile-card">
+
+        <h2>{{ profile.user.username }}</h2>
+
+        <div class="profile-info">
+
+            <p>
+                <strong>Username:</strong>
+                {{ profile.user.username }}
+            </p>
+
+            <p>
+                <strong>Email:</strong>
+                {{ profile.user.email }}
+            </p>
+
+            <p>
+                <strong>Phone Number:</strong>
+                {% if profile.phone_number %}
+                    {{ profile.phone_number }}
+                {% else %}
+                    Not added
+                {% endif %}
+            </p>
+
+            <p>
+                <strong>Address:</strong>
+                {% if profile.address %}
+                    {{ profile.address }}
+                {% else %}
+                    Not added
+                {% endif %}
+            </p>
+
+        </div>
+
+        <a href="{% url 'edit_profile' %}" class="action-btn">
+            Edit Profile
+        </a>
+
+        <a href="{% url 'change_password' %}" class="action-btn">
+            Change Password
+        </a>
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Student Dashboard</h1>
+
+<h2>Welcome, {{ user.username }} 👋</h2>
+
+<div class="dashboard-cards">
+
+    <!-- Total Students -->
+    <div class="card">
+        <h3>Total Students</h3>
+        <p>{{ total_students }}</p>
+    </div>
+
+    <!-- Average Marks -->
+    <div class="card">
+        <h3>Average Marks</h3>
+        <p>{{ average_marks }}</p>
+    </div>
+
+    <!-- Highest Marks -->
+    <div class="card">
+        <h3>Highest Marks</h3>
+        <p>{{ highest_marks }}</p>
+    </div>
+
+    <!-- Lowest Marks -->
+    <div class="card">
+        <h3>Lowest Marks</h3>
+        <p>{{ lowest_marks }}</p>
+    </div>
+
+    <!-- Above 90 -->
+    <div class="card">
+        <h3>Above 90 Marks</h3>
+        <p>{{ students_above_90 }}</p>
+    </div>
+
+    <!-- Below 60 -->
+    <div class="card">
+        <h3>Below 60 Marks</h3>
+        <p>{{ students_below_60 }}</p>
+    </div>
+
+</div>
+
+<div class="quick-actions">
+
+    <h2>Quick Actions</h2>
+
+    <a href="{% url 'add_student' %}" class="action-btn">
+        + Add Student
+    </a>
+
+    <a href="{% url 'view_students' %}" class="action-btn">
+        View Students
+    </a>
+
+</div>
+
+<!-- Recent Students -->
+
+<div class="recent-students">
+
+    <h2>Recent Students</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Course</th>
+                <th>Marks</th>
+                <th>Added On</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for student in recent_students %}
+
+            <tr>
+                <td>{{ student.name }}</td>
+                <td>
+                    {% for course in student.courses.all %}
+                        {{ course.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        No courses
+                    {% endfor %}
+                </td>
+                <td>{{ student.marks }}</td>
+                <td>{{ student.created_at|date:"d M Y" }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="4">
+                    No students found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<!-- Course Statistics -->
+
+<div class="course-statistics">
+
+    <h2>Course Statistics</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Course</th>
+                <th>Total Students</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for course in course_statistics %}
+
+            <tr>
+                <td>{{ course.name }}</td>
+                <td>{{ course.student_count }}</td>
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="2">
+                    No courses found.
+                </td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+{% endblock %}
