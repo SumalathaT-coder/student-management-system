@@ -30,6 +30,18 @@ if not SECRET_KEY:
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get("DJANGO_DEBUG", "True").lower() == "true"
 
+SECURE_SSL_REDIRECT = (
+    os.environ.get("DJANGO_SECURE_SSL_REDIRECT", "False").lower() == "true"
+)
+
+SESSION_COOKIE_SECURE = (
+    os.environ.get("DJANGO_SESSION_COOKIE_SECURE", "False").lower() == "true"
+)
+
+CSRF_COOKIE_SECURE = (
+    os.environ.get("DJANGO_CSRF_COOKIE_SECURE", "False").lower() == "true"
+)
+
 ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS", "127.0.0.1,localhost").split(",")
 
 
@@ -48,6 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -128,6 +141,12 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = BASE_DIR / "staticfiles"
+
+STORAGES = {
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
+}
 
 LOGIN_URL = "login"
 
